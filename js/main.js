@@ -10,7 +10,17 @@ let fullImgPath = ''
 let movieId = 0
 let providersFlatrate = ''
 let providersFree = ''
+let timerStart = 10
+let seconds
 
+let savedMovieRating = 0.0
+let savedMovieTitle = ''
+let savedMovieGenre = ''
+let savedMovieOverview = ''
+let savedMovieMovieId = 0
+let savedMovieProvidersFlatrate = ''
+let savedMovieProvidersFree = ''
+let savedMovieFullImgPath = ''
 
 
 let page = 1
@@ -101,26 +111,45 @@ const genreArray = {
 }
 
 
-document.querySelector('#button-top-rated').addEventListener('click', findTopRatedMovie)
-document.querySelector('#button-action').addEventListener('click', function () {findGenreMovie(28)})
-document.querySelector("#button-adventure").addEventListener('click', function() {findGenreMovie(12)}) 
-document.querySelector("#button-animation").addEventListener('click', function() {findGenreMovie(16)}) 
-document.querySelector("#button-comedy").addEventListener('click', function() {findGenreMovie(35)}) 
-document.querySelector("#button-crime").addEventListener('click', function() {findGenreMovie(80)}) 
-document.querySelector("#button-documentary").addEventListener('click', function() {findGenreMovie(99)}) 
-document.querySelector("#button-drama").addEventListener('click', function() {findGenreMovie(18)}) 
-document.querySelector("#button-family").addEventListener('click', function() {findGenreMovie(10751)}) 
-document.querySelector("#button-fantasy").addEventListener('click', function() {findGenreMovie(14)}) 
-document.querySelector("#button-history").addEventListener('click', function() {findGenreMovie(36)}) 
-document.querySelector("#button-horror").addEventListener('click', function() {findGenreMovie(27)}) 
-document.querySelector("#button-music").addEventListener('click', function() {findGenreMovie(10402)}) 
-document.querySelector("#button-mystery").addEventListener('click', function() {findGenreMovie(9648)}) 
-document.querySelector("#button-romance").addEventListener('click', function() {findGenreMovie(10749)}) 
-document.querySelector("#button-science-fiction").addEventListener('click', function() {findGenreMovie(878)})
-document.querySelector("#button-tv").addEventListener('click', function() {findGenreMovie(10770)})
-document.querySelector("#button-thriller").addEventListener('click', function() {findGenreMovie(53)}) 
-document.querySelector("#button-war").addEventListener('click', function() {findGenreMovie(10752)}) 
-document.querySelector("#button-western").addEventListener('click', function() {findGenreMovie(37)}) 
+document.querySelector('#button-top-rated').addEventListener('click', function() {findTopRatedMovie(), startTimer()})
+document.querySelector('#button-action').addEventListener('click', function () {  findGenreMovie(28), startTimer()})
+document.querySelector("#button-adventure").addEventListener('click', function() {findGenreMovie(12), startTimer()}) 
+document.querySelector("#button-animation").addEventListener('click', function() {findGenreMovie(16), startTimer()}) 
+document.querySelector("#button-comedy").addEventListener('click', function() {findGenreMovie(35), startTimer()}) 
+document.querySelector("#button-crime").addEventListener('click', function() {findGenreMovie(80), startTimer()}) 
+document.querySelector("#button-documentary").addEventListener('click', function() {findGenreMovie(99), startTimer()}) 
+document.querySelector("#button-drama").addEventListener('click', function() {findGenreMovie(18), startTimer()}) 
+document.querySelector("#button-family").addEventListener('click', function() {findGenreMovie(10751), startTimer()}) 
+document.querySelector("#button-fantasy").addEventListener('click', function() {findGenreMovie(14), startTimer()}) 
+document.querySelector("#button-history").addEventListener('click', function() {findGenreMovie(36), startTimer()}) 
+document.querySelector("#button-horror").addEventListener('click', function() {findGenreMovie(27), startTimer()}) 
+document.querySelector("#button-music").addEventListener('click', function() {findGenreMovie(10402), startTimer()}) 
+document.querySelector("#button-mystery").addEventListener('click', function() {findGenreMovie(9648), startTimer()}) 
+document.querySelector("#button-romance").addEventListener('click', function() {findGenreMovie(10749), startTimer()}) 
+document.querySelector("#button-science-fiction").addEventListener('click', function() {findGenreMovie(878), startTimer()})
+document.querySelector("#button-tv").addEventListener('click', function() {findGenreMovie(10770), startTimer()})
+document.querySelector("#button-thriller").addEventListener('click', function() {findGenreMovie(53), startTimer()}) 
+document.querySelector("#button-war").addEventListener('click', function() {findGenreMovie(10752), startTimer()}) 
+document.querySelector("#button-western").addEventListener('click', function() {findGenreMovie(37), startTimer()}) 
+
+function startTimer(){
+  // check if the timer already started
+  if(!seconds){
+    seconds = timerStart
+    let t = setInterval( function(){
+      document.querySelector('#timer').innerHTML = seconds
+      seconds--
+  
+      // run this when the time expires
+      if(seconds < 0){
+        clearInterval(t)
+        seconds = null
+      }
+    }, 1000)
+
+  }
+
+}
 
 function findTopRatedMovie(){
   clear()
@@ -195,7 +224,7 @@ function getImages(){
 }
 
 
-// Update to include pagination for MORE
+// Update to include pagination for MORE????
 function getTopRatedMovies(){
     const urlTopRatedMovies = `https://api.themoviedb.org/3/movie/top_rated?api_key=ceba62cf83a6a51a367e925da5d494d4`
     console.log(`base url is ${baseURL}`)
@@ -266,14 +295,6 @@ function getGenreMovies(){
 
 
 
-
-
-
-
-console.log(`hi`)
-
-
-
 function getProviders(){
   const options = {
     method: 'GET',
@@ -339,9 +360,32 @@ function displayMovie(){
   document.querySelector('#movie001-img').src = fullImgPath
   document.querySelector('#movie001-providers-flatrate').innerHTML = providersFlatrate
   document.querySelector('#movie001-providers-free').innerHTML = providersFree
-
+  // unhide the save movie button
+  document.querySelector('#hidden-save-button').style.display = "block"
+  document.querySelector('#hidden-save-button').addEventListener('click', saveMovie)
+  
 }
 
+function saveMovie(){
+  savedMovieRating = rating
+  savedMovieTitle = title
+  savedMovieOverview = overview
+  savedMovieGenre = allGenres
+  savedMovieMovieId = movieId
+  savedMovieProvidersFlatrate = providersFlatrate
+  savedMovieProvidersFree = providersFree
+  savedMovieFullImgPath = fullImgPath
+
+  // unhide the saved movie section and add saved movie there
+  document.querySelector('#best-so-far').style.display = "block"
+  document.querySelector('#saved-movie-title').innerHTML = savedMovieTitle
+  document.querySelector('#saved-movie-rating').innerHTML = savedMovieRating
+  document.querySelector('#saved-movie-genre').innerHTML = savedMovieGenre
+  document.querySelector('#saved-movie-overview').innerHTML = savedMovieOverview
+  document.querySelector('#saved-movie-img').src = savedMovieFullImgPath
+  document.querySelector('#saved-movie-providers-flatrate').innerHTML = savedMovieProvidersFlatrate
+  document.querySelector('#saved-movie-providers-free').innerHTML = savedMovieProvidersFree
+}
 
 
 

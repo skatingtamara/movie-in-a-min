@@ -14,32 +14,37 @@
 	<body>
 
 		<h1>Movie in a min</h1>
+		<h2 id="timer">1:00</h2>
+		<button id="reset-timer" name="button" type="button">reset timer</button>
 
-		<button id="button-top-rated" name="button" type="button">Top-rated</button>
-		<button id="button-action" name="button" type="button">Action</button>
-		<button id="button-adventure" name="button" type="button">Adventure</button>
-		<button id="button-animation" name="button" type="button">Animation</button>
-		<button id="button-comedy" name="button" type="button">Comedy</button>
-		<button id="button-crime" name="button" type="button">Crime</button>
-		<button id="button-documentary" name="button" type="button">Documentary</button>
-		<button id="button-drama" name="button" type="button">Drama</button>
-		<button id="button-family" name="button" type="button">Family</button>
-		<button id="button-fantasy" name="button" type="button">Fantasy</button>
-		<button id="button-history" name="button" type="button">History</button>
-		<button id="button-horror" name="button" type="button">Horror</button>
-		<button id="button-music" name="button" type="button">Music</button>
-		<button id="button-mystery" name="button" type="button">Mystery</button>
-		<button id="button-romance" name="button" type="button">Romance</button>
-		<button id="button-science-fiction" name="button" type="button">Science fiction</button>
-		<button id="button-tv" name="button" type="button">TV-Movie</button>
-		<button id="button-thriller" name="button" type="button">Thriller</button>
-		<button id="button-war" name="button" type="button">War</button>
-		<button id="button-western" name="button" type="button">Western</button>
+		<section id="genre-buttons">
+			<button id="button-top-rated" name="button" type="button">Top-rated</button>
+			<button id="button-action" name="button" type="button">Action</button>
+			<button id="button-adventure" name="button" type="button">Adventure</button>
+			<button id="button-animation" name="button" type="button">Animation</button>
+			<button id="button-comedy" name="button" type="button">Comedy</button>
+			<button id="button-crime" name="button" type="button">Crime</button>
+			<button id="button-documentary" name="button" type="button">Documentary</button>
+			<button id="button-drama" name="button" type="button">Drama</button>
+			<button id="button-family" name="button" type="button">Family</button>
+			<button id="button-fantasy" name="button" type="button">Fantasy</button>
+			<button id="button-history" name="button" type="button">History</button>
+			<button id="button-horror" name="button" type="button">Horror</button>
+			<button id="button-music" name="button" type="button">Music</button>
+			<button id="button-mystery" name="button" type="button">Mystery</button>
+			<button id="button-romance" name="button" type="button">Romance</button>
+			<button id="button-science-fiction" name="button" type="button">Science fiction</button>
+			<button id="button-tv" name="button" type="button">TV-Movie</button>
+			<button id="button-thriller" name="button" type="button">Thriller</button>
+			<button id="button-war" name="button" type="button">War</button>
+			<button id="button-western" name="button" type="button">Western</button>
+		</section>
 
 
 		<h2>Results</h2>
 		<h4 id="movie001-title">Title</h4>
 		<img id="movie001-img" alt="movie poster">
+		<button id="hidden-save-button" hidden name="button" type="'button">Best so far</button>
 		<p>Rating: <span id="movie001-rating">0.0</span>
 		<p>Genres: <span id="movie001-genre"></span></p>
 		<p>Overview: <span id="movie001-overview"></span></p>
@@ -47,6 +52,20 @@
 		<h4>Providers:</h4>
 		<p>Flatrate: <span id="movie001-providers-flatrate"></span></p>
 		<p>Free: <span id="movie001-providers-free"></span></p>
+
+		<section hidden id="best-so-far">
+			<h4 id="saved-movie-title">Title</h4>
+			<img id="saved-movie-img" alt="movie poster">
+			<p>Rating: <span id="saved-movie-rating">0.0</span>
+			<p>Genres: <span id="saved-movie-genre"></span></p>
+			<p>Overview: <span id="saved-movie-overview"></span></p>
+	
+			<h4>Providers:</h4>
+			<p>Flatrate: <span id="saved-movie-providers-flatrate"></span></p>
+			<p>Free: <span id="saved-movie-providers-free"></span></p>
+
+		</section>
+			
 	
 		<footer>
 			<p class="attributes">This product uses the TMDB API but is not endorsed or certified by TMDB.</p>

@@ -26,10 +26,13 @@ footer{
   display: block;
   padding-top: 10%;
 }
- .attributes {
+
+.attributes {
   display: block;
   padding-top: 1rem;
 } 
+
+
 
 /******************************************
 /* ADDITIONAL STYLES
