@@ -1,8 +1,7 @@
 
-
-
 let baseURL = ''
 let allGenres = ''
+let genreIds = []
 let rating = 0.0
 let title = ''
 let overview = ''
@@ -12,6 +11,7 @@ let providersFlatrate = ''
 let providersFree = ''
 let timerStart = 10
 let seconds
+let genreSearch = true
 
 let savedMovieRating = 0.0
 let savedMovieTitle = ''
@@ -28,6 +28,8 @@ let voteAverageGreaterThan = 7
 let voteCountGreaterThan = 10
 let genreSearchBy = 12
 let sortBy = 'popularity.desc'
+const imgSize = 3
+
 
 const genreArray = {
   "genres": [
@@ -151,27 +153,44 @@ function startTimer(){
 
 }
 
+
+
 function findTopRatedMovie(){
-  clear()
-  getImages()
-  setTimeout(getTopRatedMovies, 400)
-  setTimeout(getProviders, 1000)
-  setTimeout(displayMovie, 3000)
+
+  const clearPromise = new Promise((resolve, reject) => {
+    console.log(`step 1`)
+    genreSearch = false
+    clear(resolve)
+  })
+
+  clearPromise.then(() => {
+    getImages()
+    console.log(`clearPromise finished`)
+  })
+  
 }
 
 function findGenreMovie(selectedGenre){
-  clear()
-  getImages()
-  genreSearchBy = selectedGenre
-  setTimeout(getGenreMovies, 400)
-  setTimeout(getProviders, 1000)
-  setTimeout(displayMovie, 3000)
+
+  const clearPromise = new Promise((resolve, reject) => {
+    console.log(`step 1`)
+    clear(resolve)
+    genreSearchBy = selectedGenre
+  })
+
+  clearPromise.then(() => {
+    getImages()
+    console.log(`clearPromise finished`)
+  })
+  
 }
 
 
-function clear(){
+function clear(resolve){
+  console.log(`clear() start`)
   baseURL = ''
   allGenres = ''
+  genreIds = []
   rating = 0.0
   title = ''
   overview = ''
@@ -179,6 +198,8 @@ function clear(){
   movieId = 0
   providersFlatrate = ''
   providersFree = ''
+  resolve()
+  console.log(`clear() end`)
 }
 
 
@@ -201,6 +222,7 @@ function lookUpGenre( arr, nums){
 
 
 function getImages(){
+  console.log(`getImages() start`)
   const options = {
     method: 'GET',
     headers: {
@@ -210,15 +232,22 @@ function getImages(){
   };
   
   fetch('https://api.themoviedb.org/3/configuration', options)
-    .then(response => response.json())
-    .then(data => {
+    .then((data) => data.json())
+    .then((data, resolve) => {
       console.log(data)
-      // console.log(data.images.base_url)
-      // console.log(data.images.poster_sizes[2])
-      const imgSize = 3
-      console.log(`url should be: ${data.images.base_url}${data.images.poster_sizes[imgSize]}`)
+      console.log(`getImages function: url should be: ${data.images.base_url}${data.images.poster_sizes[imgSize]}`)
       baseURL = `${data.images.base_url}${data.images.poster_sizes[imgSize]}`
+      console.log(`getImages() end`)
     })
+    .then(() => {
+      if(genreSearch === true){
+        getGenreMovies()
+      } else{
+        getTopRatedMovies()
+      }
+
+    }
+    )
     .catch(err => console.error(err));
     
 }
@@ -226,12 +255,14 @@ function getImages(){
 
 // Update to include pagination for MORE????
 function getTopRatedMovies(){
+    console.log(`getTopRatedMovies() start`)
     const urlTopRatedMovies = `https://api.themoviedb.org/3/movie/top_rated?api_key=ceba62cf83a6a51a367e925da5d494d4`
-    console.log(`base url is ${baseURL}`)
+    console.log(`getTopRatedMovies function: base url is ${baseURL}`)
 
   fetch(urlTopRatedMovies)
       .then(res => res.json()) // parse response as JSON
       .then(data => {
+        console.log(`getTopRatedMovies function body is running`)
         console.log(data)
         console.log(data.total_results)
         let randomSelection = Math.floor(Math.random()*20)
@@ -242,10 +273,16 @@ function getTopRatedMovies(){
         title = data.results[randomSelection].title
         overview = data.results[randomSelection].overview
         rating = data.results[randomSelection].vote_average
-        const genreIds = data.results[randomSelection].genre_ids
+        genreIds = data.results[randomSelection].genre_ids
+        fullImgPath = baseURL+data.results[randomSelection].poster_path
+        console.log(`getTopRatedMovies() body end`)
+      })
+      .then(() => {
         allGenres = lookUpGenre(genreArray.genres, genreIds)
         console.log(allGenres)
-        fullImgPath = baseURL+data.results[randomSelection].poster_path
+      })
+      .then( () => {
+        getProviders()
       })
       .catch(err => {
           console.log(`error ${err}`)
@@ -256,6 +293,7 @@ function getTopRatedMovies(){
 
 
 function getGenreMovies(){
+  console.log(`getGenreMovies() start`)
   const options = {
     method: 'GET',
     headers: {
@@ -279,16 +317,18 @@ function getGenreMovies(){
       title = data.results[randomSelection].title
       overview = data.results[randomSelection].overview
       rating = data.results[randomSelection].vote_average
-      const genreIds = data.results[randomSelection].genre_ids
+      genreIds = data.results[randomSelection].genre_ids
+      fullImgPath = baseURL+data.results[randomSelection].poster_path
+      console.log(`gerGenreMovies() body end`)
+    })
+    .then( allGenres => {
       allGenres = lookUpGenre(genreArray.genres, genreIds)
       console.log(allGenres)
-      fullImgPath = baseURL+data.results[randomSelection].poster_path
-    
+    })
+    .then( () => {
+      getProviders()
     })
     .catch(err => console.error(err));
-
-
-
 
 }
 
@@ -296,6 +336,7 @@ function getGenreMovies(){
 
 
 function getProviders(){
+  console.log(`getProviders() start`)
   const options = {
     method: 'GET',
     headers: {
@@ -307,13 +348,9 @@ function getProviders(){
   fetch(`https://api.themoviedb.org/3/movie/${movieId}/watch/providers`, options)
     .then(response => response.json())
     .then(response => {
-      // console.log(response)
       if (response.results.US !== undefined){
         console.log(`Checking US providers`)
         console.log(response.results.US)
-        // console.log(response.results.US.flatrate)
-        // console.log(response.results.US.free)
-        
         
         if (response.results.US.flatrate !== undefined){
           const flatrateArr = response.results.US.flatrate
@@ -346,6 +383,10 @@ function getProviders(){
       } else {
         console.log(`No US provider data`)
       }
+      console.log(`getProviders() body end`)
+    })
+    .then(() =>{
+      displayMovie()
     })
     .catch(err => console.error(err));
 
@@ -353,6 +394,7 @@ function getProviders(){
 
 
 function displayMovie(){
+  console.log(`displayMovie() start`)
   document.querySelector('#movie001-title').innerHTML = title
   document.querySelector('#movie001-rating').innerHTML = rating
   document.querySelector('#movie001-genre').innerHTML = allGenres
@@ -363,7 +405,7 @@ function displayMovie(){
   // unhide the save movie button
   document.querySelector('#hidden-save-button').style.display = "block"
   document.querySelector('#hidden-save-button').addEventListener('click', saveMovie)
-  
+  console.log(`displayMovie() end`)
 }
 
 function saveMovie(){
