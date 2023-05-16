@@ -8,16 +8,24 @@
 		<title>Title in the tab</title>
 
 		<!-- external CSS link -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="css/normalize.css">
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
+		<header class="header">
 
-		<h1>Movie in a min</h1>
-		<h2 id="timer">1:00</h2>
-		<button id="reset-timer" name="button" type="button">reset timer</button>
+			
+			<h1>Movie in a min</h1>
+			<div class="timer">
+				<h2 id="timer">1:00</h2>
+				<!-- <button id="reset-timer" name="button" type="button">reset timer</button> -->
+			</div>
+		</header>
 
-		<section id="genre-buttons">
+		<section class="genre-buttons">
 			<button id="button-top-rated" name="button" type="button">Top-rated</button>
 			<button id="button-action" name="button" type="button">Action</button>
 			<button id="button-adventure" name="button" type="button">Adventure</button>
@@ -40,31 +48,40 @@
 			<button id="button-western" name="button" type="button">Western</button>
 		</section>
 
+		<section class="movie-result">
+			<img class="poster" id="movie001-img" src="img/movie-placeholder.png"  alt="movie poster">
+			<section class="result-details">
+				<h2 id="movie001-title">Title will go here</h2>
+				<button id="hidden-save-button" hidden name="button" type="'button">Best so far</button>
+				<p><span class="bold">Rating: </span><span id="movie001-rating"></span></p>
+				<p><span class="bold">Genres: </span><span id="movie001-genre"></span></p>
+				<p><span class="bold">Overview: </span><span id="movie001-overview"></span></p>
 
-		<h2>Results</h2>
-		<h4 id="movie001-title">Title</h4>
-		<img id="movie001-img" alt="movie poster">
-		<button id="hidden-save-button" hidden name="button" type="'button">Best so far</button>
-		<p>Rating: <span id="movie001-rating">0.0</span>
-		<p>Genres: <span id="movie001-genre"></span></p>
-		<p>Overview: <span id="movie001-overview"></span></p>
-
-		<h4>Providers:</h4>
-		<p>Flatrate: <span id="movie001-providers-flatrate"></span></p>
-		<p>Free: <span id="movie001-providers-free"></span></p>
-
-		<section hidden id="best-so-far">
-			<h4 id="saved-movie-title">Title</h4>
-			<img id="saved-movie-img" alt="movie poster">
-			<p>Rating: <span id="saved-movie-rating">0.0</span>
-			<p>Genres: <span id="saved-movie-genre"></span></p>
-			<p>Overview: <span id="saved-movie-overview"></span></p>
-	
-			<h4>Providers:</h4>
-			<p>Flatrate: <span id="saved-movie-providers-flatrate"></span></p>
-			<p>Free: <span id="saved-movie-providers-free"></span></p>
-
+				<h3>Providers</h3>
+				<p><span class="bold">Subscription: </span><span id="movie001-providers-flatrate"></span></p>
+				<p><span class="bold">Free: </span><span id="movie001-providers-free"></span></p>
+			</section>
 		</section>
+
+		<div class="best-so-far">
+			<section class="movie-result">
+
+				<h1>Best so far:</h1>
+				<img class="poster" id="saved-movie-img" src="img/movie-placeholder.png"  alt="movie poster">
+				<section class="result-details">
+					<h2 id="saved-movie-title">Title will go here</h2>
+					<p><span class="bold">Rating: </span><span id="saved-movie-rating"></span></p>
+					<p><span class="bold">Genres: </span><span id="saved-movie-genre"></span></p>
+					<p><span class="bold">Overview: </span><span id="saved-movie-overview"></span></p>
+	
+					<h3>Providers</h3>
+					<p><span class="bold">Subscription: </span><span id="saved-movie-providers-flatrate"></span></p>
+					<p><span class="bold">Free: </span><span id="saved-movie-providers-free"></span></p>
+				</section>
+			</section>
+
+
+		</div>
 			
 	
 		<footer>

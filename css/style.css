@@ -10,7 +10,11 @@
 /******************************************
 /* LAYOUT
 /*******************************************/
-img{
+body{
+  font-family: 'Lexend', sans-serif;
+}
+
+footer img{
   display: block;
   margin: 0 auto;
   width: 20%
@@ -20,6 +24,52 @@ img{
   display: block;
   margin: 0 auto 0 0
 
+}
+
+.header{
+  display: flex;
+  margin-bottom: 3rem;
+  padding: 1rem; 
+}
+
+.header .timer {
+  margin-left: 30%;
+  justify-content: center;
+}
+
+.genre-buttons{
+  margin: 1rem 1rem 3rem 1rem;
+}
+
+.genre-buttons button{
+  padding: 1rem;
+  margin: .5rem;
+}
+
+.movie-result {
+  display: flex;
+  margin: 1rem;
+}
+
+.best-so-far{
+  display: none;
+}
+
+
+.poster{
+  flex-basis: 33.33%;
+  border-radius: 5%;
+  margin: 1rem 3rem;
+
+}
+
+.result-details{
+  flex-basis: 66.66%;
+  margin: 1rem;
+}
+
+.bold{
+  font-weight: 700;
 }
 
 footer{
@@ -37,5 +87,4 @@ footer{
 /******************************************
 /* ADDITIONAL STYLES
 /*******************************************/
-
 

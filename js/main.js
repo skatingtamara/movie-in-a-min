@@ -9,7 +9,7 @@ let fullImgPath = ''
 let movieId = 0
 let providersFlatrate = ''
 let providersFree = ''
-let timerStart = 10
+let timerStart = 60
 let seconds
 let genreSearch = true
 
@@ -139,13 +139,22 @@ function startTimer(){
   if(!seconds){
     seconds = timerStart
     let t = setInterval( function(){
-      document.querySelector('#timer').innerHTML = seconds
+      document.querySelector('#timer').innerHTML = ':'+ String(seconds).padStart(2, '0')
       seconds--
+      console.log(`seconds: ${seconds}`)
   
-      // run this when the time expires
-      if(seconds < 0){
+      // trigger UI as time decreases
+      if(seconds >= 30){
+        document.querySelector('body').style.backgroundColor = '#EEEEEE'
+      } else if(seconds >= 20){
+        document.querySelector('body').style.backgroundColor = '#F9B5D0'
+      } else if(seconds >= 10){
+        document.querySelector('body').style.backgroundColor = '#FF8E9E'
+      } else if(seconds <= 0){
+        document.querySelector('body').style.backgroundColor = '#FF597B'
         clearInterval(t)
         seconds = null
+        document.querySelector('#timer').innerHTML = '1:00'
       }
     }, 1000)
 
@@ -321,7 +330,7 @@ function getGenreMovies(){
       fullImgPath = baseURL+data.results[randomSelection].poster_path
       console.log(`gerGenreMovies() body end`)
     })
-    .then( allGenres => {
+    .then( () => {
       allGenres = lookUpGenre(genreArray.genres, genreIds)
       console.log(allGenres)
     })
@@ -362,6 +371,7 @@ function getProviders(){
           console.log(`providersFlatrate is ${providersFlatrate}`)
   
         } else{
+          providersFlatrate = 'You need to rent or buy it'
           console.log(`No flatrate`)
         }
   
@@ -377,11 +387,14 @@ function getProviders(){
           console.log(`providersFree is ${providersFree}`)
   
         } else{
+          providersFree = 'Sorry, this aint free'
           console.log(`No free`)
         }
 
       } else {
         console.log(`No US provider data`)
+        providersFree = 'Sorry, this aint free'
+        providersFlatrate = 'You need to rent or buy it'
       }
       console.log(`getProviders() body end`)
     })
@@ -419,7 +432,7 @@ function saveMovie(){
   savedMovieFullImgPath = fullImgPath
 
   // unhide the saved movie section and add saved movie there
-  document.querySelector('#best-so-far').style.display = "block"
+  document.querySelector('.best-so-far').style.display = "flex"
   document.querySelector('#saved-movie-title').innerHTML = savedMovieTitle
   document.querySelector('#saved-movie-rating').innerHTML = savedMovieRating
   document.querySelector('#saved-movie-genre').innerHTML = savedMovieGenre
