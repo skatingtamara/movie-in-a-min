@@ -9,7 +9,7 @@ let fullImgPath = ''
 let movieId = 0
 let providersFlatrate = ''
 let providersFree = ''
-let timerStart = 15
+let timerStart = 60             /// Update this for testing
 let seconds
 let genreSearch = true
 let genreSearchBy = 12
@@ -147,17 +147,17 @@ function startTimer(){
     let t = setInterval( function(){
       document.querySelector('#timer').innerHTML = ':'+ String(seconds).padStart(2, '0')
       seconds--
+
+      document.querySelector('body').style.animation = 'gradient 15s ease infinite'
       // console.log(`seconds: ${seconds}`)
   
       // trigger UI as time decreases
-      if(seconds >= 15){
-        document.querySelector('body').style.backgroundColor = '#EEEEEE'
-      } else if(seconds >= 10){
-        document.querySelector('body').style.backgroundColor = '#F9B5D0'
-      } else if(seconds >= 5){
-        document.querySelector('body').style.backgroundColor = '#FF8E9E'
+      if(seconds >= 30){
+        document.querySelector('body').style.animation = 'gradient 10s ease infinite'
+      } else if(seconds <= 10 && seconds > 0){
+        document.querySelector('body').style.animation = 'gradient 1s ease infinite'
       } else if(seconds <= 0){
-        document.querySelector('body').style.backgroundColor = '#FF597B'
+        document.querySelector('body').style.animation = 'none'
         clearInterval(t)
         seconds = null
         document.querySelector('#timer').innerHTML = '1:00'
