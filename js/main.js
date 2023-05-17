@@ -9,9 +9,10 @@ let fullImgPath = ''
 let movieId = 0
 let providersFlatrate = ''
 let providersFree = ''
-let timerStart = 60
+let timerStart = 15
 let seconds
 let genreSearch = true
+let genreSearchBy = 12
 
 let savedMovieRating = 0.0
 let savedMovieTitle = ''
@@ -22,12 +23,15 @@ let savedMovieProvidersFlatrate = ''
 let savedMovieProvidersFree = ''
 let savedMovieFullImgPath = ''
 
-
+// Search options
 let page = 1
 let voteAverageGreaterThan = 7
-let voteCountGreaterThan = 10
-let genreSearchBy = 12
+let voteCountGreaterThan = 100
 let sortBy = 'popularity.desc'
+
+// Language options for later
+let language = 'en-US'
+let original_language = 'en' 
 const imgSize = 3
 
 
@@ -113,6 +117,8 @@ const genreArray = {
 }
 
 
+
+
 document.querySelector('#button-top-rated').addEventListener('click', function() {findTopRatedMovie(), startTimer()})
 document.querySelector('#button-action').addEventListener('click', function () {  findGenreMovie(28), startTimer()})
 document.querySelector("#button-adventure").addEventListener('click', function() {findGenreMovie(12), startTimer()}) 
@@ -141,14 +147,14 @@ function startTimer(){
     let t = setInterval( function(){
       document.querySelector('#timer').innerHTML = ':'+ String(seconds).padStart(2, '0')
       seconds--
-      console.log(`seconds: ${seconds}`)
+      // console.log(`seconds: ${seconds}`)
   
       // trigger UI as time decreases
-      if(seconds >= 30){
+      if(seconds >= 15){
         document.querySelector('body').style.backgroundColor = '#EEEEEE'
-      } else if(seconds >= 20){
-        document.querySelector('body').style.backgroundColor = '#F9B5D0'
       } else if(seconds >= 10){
+        document.querySelector('body').style.backgroundColor = '#F9B5D0'
+      } else if(seconds >= 5){
         document.querySelector('body').style.backgroundColor = '#FF8E9E'
       } else if(seconds <= 0){
         document.querySelector('body').style.backgroundColor = '#FF597B'
@@ -162,12 +168,32 @@ function startTimer(){
 
 }
 
+// to add later.
+function storeSearchOptions(resolve){
+  console.log(`storeSearchOptions() start`)
+  // page = document.querySelector('#page-number').value
+  // voteAverageGreaterThan = document.querySelector('#rating-min').value
+  // voteCountGreaterThan = document.querySelector('#vote-count-min').value
+  // sortBy = document.querySelector('#sort-by').value
+  console.log(`page is ${page}, rating-min is ${voteAverageGreaterThan}, vote-count-min is ${voteCountGreaterThan} `)
+  resolve()
+  console.log(`storeSearchOptions() end`)
+}
 
 
 function findTopRatedMovie(){
 
+  const searchOptionsPromise = new Promise((resolve,reject) => {
+    console.log('step 1')
+    storeSearchOptions(resolve)
+  })
+
+  searchOptionsPromise.then(() =>{
+    clearPromise
+  })
+
   const clearPromise = new Promise((resolve, reject) => {
-    console.log(`step 1`)
+    console.log(`step 2`)
     genreSearch = false
     clear(resolve)
   })
@@ -180,6 +206,15 @@ function findTopRatedMovie(){
 }
 
 function findGenreMovie(selectedGenre){
+
+  const searchOptionsPromise = new Promise((resolve,reject) => {
+    console.log('step 1')
+    storeSearchOptions(resolve)
+  })
+
+  searchOptionsPromise.then(() =>{
+    clearPromise
+  })
 
   const clearPromise = new Promise((resolve, reject) => {
     console.log(`step 1`)
@@ -262,14 +297,31 @@ function getImages(){
 }
 
 
-// Update to include pagination for MORE????
-function getTopRatedMovies(){
-    console.log(`getTopRatedMovies() start`)
-    const urlTopRatedMovies = `https://api.themoviedb.org/3/movie/top_rated?api_key=ceba62cf83a6a51a367e925da5d494d4`
-    console.log(`getTopRatedMovies function: base url is ${baseURL}`)
 
-  fetch(urlTopRatedMovies)
-      .then(res => res.json()) // parse response as JSON
+
+
+
+function getTopRatedMovies(){
+  console.log(`getTopRatedMovies() start`)
+  // const urlTopRatedMovies = `https://api.themoviedb.org/3/movie/top_rated?api_key=ceba62cf83a6a51a367e925da5d494d4`
+  console.log(`getTopRatedMovies function: base url is ${baseURL}`)
+
+
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZWJhNjJjZjgzYTZhNTFhMzY3ZTkyNWRhNWQ0OTRkNCIsInN1YiI6IjY0NWE4Nzc5ZmUwNzdhNWNhZGY2NmEyZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Zd5cZQ23yl6pgvSWWr9r9Cdz7ESpv6Pru8tLvdRg_nI'
+    }
+  };
+  
+  fetch(`https://api.themoviedb.org/3/movie/top_rated?language=${language}&page=${page}&region=US`, options)
+    .then(response => response.json())
+    // .then(response => console.log(response))
+    // .catch(err => console.error(err));
+
+  // fetch(urlTopRatedMovies)
+  //     .then(res => res.json()) // parse response as JSON
       .then(data => {
         console.log(`getTopRatedMovies function body is running`)
         console.log(data)
@@ -311,7 +363,7 @@ function getGenreMovies(){
     }
   };
   
-  fetch(`https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&region=US&sort_by=${sortBy}&vote_average.gte=${voteAverageGreaterThan}&vote_count.gte=${voteCountGreaterThan}&with_genres=${genreSearchBy}`, options)
+  fetch(`https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=${language}&page=${page}&region=US&sort_by=${sortBy}&vote_average.gte=${voteAverageGreaterThan}&vote_count.gte=${voteCountGreaterThan}&with_genres=${genreSearchBy}&with_original_language=${original_language}`, options)
     .then(response => response.json())
     .then(data => {
       console.log(`DISCOVERY:`)

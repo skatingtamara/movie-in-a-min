@@ -14,58 +14,27 @@ body{
   font-family: 'Lexend', sans-serif;
 }
 
-footer img{
-  display: block;
-  margin: 0 auto;
-  width: 20%
-}
-
-.reference-img{
-  display: block;
-  margin: 0 auto 0 0
-
-}
-
 .header{
   display: flex;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   padding: 1rem; 
 }
 
 .header .timer {
-  margin-left: 30%;
+  margin-left: 20%;
   justify-content: center;
 }
+
+/* .header .search-options{
+  margin-left: 10%
+} */
 
 .genre-buttons{
   margin: 1rem 1rem 3rem 1rem;
 }
 
-.genre-buttons button{
-  padding: 1rem;
-  margin: .5rem;
-}
-
-.movie-result {
-  display: flex;
-  margin: 1rem;
-}
-
 .best-so-far{
   display: none;
-}
-
-
-.poster{
-  flex-basis: 33.33%;
-  border-radius: 5%;
-  margin: 1rem 3rem;
-
-}
-
-.result-details{
-  flex-basis: 66.66%;
-  margin: 1rem;
 }
 
 .bold{
@@ -75,12 +44,91 @@ footer img{
 footer{
   display: block;
   padding-top: 10%;
+  margin: 1rem;
 }
 
 .attributes {
-  display: block;
   padding-top: 1rem;
 } 
+
+footer img{
+  display: block;
+  /* margin: 0 auto; */
+  width: 10rem
+}
+
+
+
+
+@media screen and (max-width: 600px) {
+
+  .genre-buttons button{
+    padding: .5rem;
+    margin: .2rem;
+  }
+
+  .poster{
+    display: block;
+    border-radius: 5%;
+    margin: 2rem auto;
+    max-width: 12.5rem;
+  }
+
+  .result-details{
+    display: block;
+    margin: .5rem
+  }
+
+  .movie-result {
+    margin: .5rem;
+  }
+
+  
+}
+
+@media only screen and (min-width: 600px) {
+
+  .header{
+    margin-bottom: 2rem;
+  }
+  
+  .genre-buttons button{
+    padding: 1rem;
+    margin: .5rem;
+  }
+  
+  .movie-result {
+    display: flex;
+    margin: 1rem;
+  }
+
+  .poster{
+    flex-basis: 33.33%;
+    border-radius: 5%;
+    margin: 1rem 3rem;
+    max-width: 18.75rem;
+  
+  }
+  
+  .result-details{
+    flex-basis: 66.66%;
+    margin: 1rem;
+  }
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+}
 
 
 
