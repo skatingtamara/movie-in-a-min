@@ -30,15 +30,20 @@ body{
 
 .genre-buttons{
   margin: 1rem;
+  padding: .1rem;
 }
 
 button{
   background: white;
   border: 0;
   border-radius: 5%;
+  
 
-
+  &:active {
+    font-weight: 700;
+  }
 }
+
 
 
 .best-so-far{
@@ -62,8 +67,39 @@ footer{
 footer img{
   display: block;
   /* margin: 0 auto; */
-  width: 10rem
+  width: 10rem;
 }
+
+.best-so-far h1{
+  display: block;
+}
+
+
+
+
+/* save button animation */
+
+.save-button {
+
+  &:active {
+    font-weight: 700;
+    
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -76,10 +112,10 @@ footer img{
   }
 
   .poster{
-    display: block;
     border-radius: 5%;
     margin: 2rem auto;
-    max-width: 12.5rem;
+    max-width: 10rem;
+    max-height: 15rem;
   }
 
   .result-details{
@@ -88,8 +124,10 @@ footer img{
   }
 
   .movie-result {
+    display: flex;
     margin: .5rem;
   }
+
 
   
 }

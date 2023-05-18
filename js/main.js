@@ -470,10 +470,23 @@ function displayMovie(){
   // unhide the save movie button
   document.querySelector('#hidden-save-button').style.display = "block"
   document.querySelector('#hidden-save-button').addEventListener('click', saveMovie)
+
+
+
+
   console.log(`displayMovie() end`)
 }
 
+
+
+
+
+
+
 function saveMovie(){
+
+
+
   savedMovieRating = rating
   savedMovieTitle = title
   savedMovieOverview = overview
