@@ -468,8 +468,8 @@ function displayMovie(){
   document.querySelector('#movie001-providers-flatrate').innerHTML = providersFlatrate
   document.querySelector('#movie001-providers-free').innerHTML = providersFree
   // unhide the save movie button
-  document.querySelector('#hidden-save-button').style.display = "block"
-  document.querySelector('#hidden-save-button').addEventListener('click', saveMovie)
+  document.querySelector('.hide-until-result').style.display = "block"
+  document.querySelector('.save-button').addEventListener('click', saveMovie)
 
 
 
@@ -497,7 +497,8 @@ function saveMovie(){
   savedMovieFullImgPath = fullImgPath
 
   // unhide the saved movie section and add saved movie there
-  document.querySelector('.best-so-far').style.display = "flex"
+  document.querySelector('.best-so-far').style.display = "block"
+  document.querySelector('.movie-result').style.display = "flex"
   document.querySelector('#saved-movie-title').innerHTML = savedMovieTitle
   document.querySelector('#saved-movie-rating').innerHTML = savedMovieRating
   document.querySelector('#saved-movie-genre').innerHTML = savedMovieGenre

@@ -104,34 +104,42 @@
 		<section class="movie-result">
 			<img class="poster" id="movie001-img" src="img/movie-placeholder.png"  alt="movie poster">
 			<section class="result-details">
-				<h2 id="movie001-title">Title will go here</h2>
-				<button id="hidden-save-button" class="save-button" hidden name="button" type="'button">Best so far</button>
-				<p><span class="bold">Rating: </span><span id="movie001-rating"></span></p>
-				<p><span class="bold">Genres: </span><span id="movie001-genre"></span></p>
-				<p><span class="bold">Overview: </span><span id="movie001-overview"></span></p>
-
-				<h3>Providers</h3>
-				<p><span class="bold">Subscription: </span><span id="movie001-providers-flatrate"></span></p>
-				<p><span class="bold">Free: </span><span id="movie001-providers-free"></span></p>
+				<div class="poster-side">
+					<h2 id="movie001-title">Title will go here</h2>
+					<button class="hide-until-result save-button"  name="button" type="'button">Best so far</button>
+					<p><span class="bold">Rating: </span><span id="movie001-rating"></span></p>
+					<p><span class="bold">Genres: </span><span id="movie001-genre"></span></p>
+					
+					<h3>Providers</h3>
+					<p><span class="bold">Subscription: </span><span id="movie001-providers-flatrate"></span></p>
+					<p><span class="bold">Free: </span><span id="movie001-providers-free"></span></p>
+				</div>
 			</section>
 		</section>
+		<div class="mobile-under-poster">
+			<p><span class="bold">Overview: </span><span id="movie001-overview"></span></p>
+		</div>
 
 		<div class="best-so-far">
-			<h1>Best so far:</h1>
+			<h1 id="best-section-header">Best so far:</h1>
 			<section class="movie-result">
-
 				<img class="poster" id="saved-movie-img" src="img/movie-placeholder.png"  alt="movie poster">
 				<section class="result-details">
-					<h2 id="saved-movie-title">Title will go here</h2>
-					<p><span class="bold">Rating: </span><span id="saved-movie-rating"></span></p>
-					<p><span class="bold">Genres: </span><span id="saved-movie-genre"></span></p>
-					<p><span class="bold">Overview: </span><span id="saved-movie-overview"></span></p>
-	
-					<h3>Providers</h3>
-					<p><span class="bold">Subscription: </span><span id="saved-movie-providers-flatrate"></span></p>
-					<p><span class="bold">Free: </span><span id="saved-movie-providers-free"></span></p>
+					<div class="poster-side">
+						<h2 id="saved-movie-title">Title will go here</h2>
+						<p><span class="bold">Rating: </span><span id="saved-movie-rating"></span></p>
+						<p><span class="bold">Genres: </span><span id="saved-movie-genre"></span></p>
+						
+						<h3>Providers</h3>
+						<p><span class="bold">Subscription: </span><span id="saved-movie-providers-flatrate"></span></p>
+						<p><span class="bold">Free: </span><span id="saved-movie-providers-free"></span></p>
+					</div>
+
 				</section>
 			</section>
+			<div class="mobile-under-poster">
+				<p><span class="bold">Overview: </span><span id="saved-movie-overview"></span></p>
+			</div>
 
 
 		</div>
